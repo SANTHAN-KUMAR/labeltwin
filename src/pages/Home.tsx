@@ -1,6 +1,9 @@
+import { lazy, Suspense } from 'react'
 import { useStore, PORTFOLIO_LABELS } from '../state/store'
 import { CRITERIA, Icon, Stat } from '../components/ui'
 import { RECALL_META, VSM_TOTAL } from '../data/evidence'
+
+const Scene3D = lazy(() => import('../components/Scene3D'))
 
 const STAGES = ['Product data', 'Markets', 'Requirements', 'Gaps', 'Content', 'Artwork', 'Review', 'Approval', 'Change order', 'Config control', 'Final QC', 'Release', 'Line', 'Production']
 
@@ -18,14 +21,22 @@ export default function Home() {
   return (
     <div className="grid" style={{ gap: 18 }}>
       <section className="hero">
-        <div className="k">Teliport S4 · Case Study 4 · Team Astute Computer</div>
-        <h1>Stop authoring labels. <em>Compile them.</em></h1>
-        <p>LabelTwin turns medical device labeling into a build pipeline. One source of truth compiles every label, deterministic tests verify it, and a signed Label Bill of Materials proves why every element exists. GenAI speeds everything around the compiler; it never has the final word on a label.</p>
-        <div className="row">
-          <button className="btn teal" onClick={() => set({ tourStep: 0 })}><Icon name="play" size={14} /> Start the 2½-minute demo</button>
-          <button className="btn ghost" onClick={() => go('sources')}>Explore freely</button>
+        <div className="hero-grid">
+          <div>
+            <div className="k">Teliport S4 · Case Study 4 · Team Astute Computer</div>
+            <h1>Stop authoring labels. <em>Compile them.</em></h1>
+            <p>LabelTwin turns medical device labeling into a build pipeline. One source of truth compiles every label, deterministic tests verify it, and a signed Label Bill of Materials proves why every element exists. GenAI speeds everything around the compiler; it never has the final word on a label.</p>
+            <div className="row">
+              <button className="btn teal" onClick={() => set({ tourStep: 0 })}><Icon name="play" size={14} /> Start the 2½-minute demo</button>
+              <button className="btn ghost" onClick={() => go('sources')}>Explore freely</button>
+            </div>
+            <div className="flow">{STAGES.map((x, i) => <span key={x} style={{ display: 'contents' }}><span>{x}</span>{i < STAGES.length - 1 && <span className="arrow">→</span>}</span>)}</div>
+          </div>
+          <div className="hero-scene" role="img" aria-label="Scattered label panels assembling into a verified, signed stack">
+            <Suspense fallback={null}><Scene3D /></Suspense>
+            <span className="hero-scene-caption">Connect <i>→</i> Compile <i>→</i> Verify <i>→</i> Prove</span>
+          </div>
         </div>
-        <div className="flow">{STAGES.map((x, i) => <span key={x} style={{ display: 'contents' }}><span>{x}</span>{i < STAGES.length - 1 && <span className="arrow">→</span>}</span>)}</div>
       </section>
 
       <div className="grid g4">

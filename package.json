@@ -11,10 +11,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@types/three": "0.187.0",
     "bwip-js": "4.11.4",
     "pixelmatch": "8.0.0",
     "react": "19.1.10",
     "react-dom": "19.1.10",
+    "three": "0.187.0",
     "zxing-wasm": "3.1.5"
   },
   "devDependencies": {
