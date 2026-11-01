@@ -40,7 +40,7 @@ export default function Change() {
           </div>
           <div className="sep" />
           <div className="between"><b className="small">Structured change set (schema CR-v2)</b><span className={`badge ${cs.confidence >= 0.9 ? 'b-pass' : 'b-warn'}`}>confidence {cs.confidence.toFixed(2)}</span></div>
-          <pre className="mono" style={{ background: '#0b2a4a', color: '#cfe8ff', padding: 12, borderRadius: 10, overflowX: 'auto', fontSize: 12, marginTop: 8 }}>{JSON.stringify({ changeRequest: 'CR-2026-0907', linkedECO: 'ECO-2026-0412', product: cs.product, items: cs.items, effectivity: cs.effectivity, needsHuman: cs.confidence < 0.9 || cs.unparsed.length > 0 }, null, 2)}</pre>
+          <pre className="mono" style={{ background: '#17191d', color: '#cfe8ff', padding: 12, borderRadius: 10, overflowX: 'auto', fontSize: 12, marginTop: 8 }}>{JSON.stringify({ changeRequest: 'CR-2026-0907', linkedECO: 'ECO-2026-0412', product: cs.product, items: cs.items, effectivity: cs.effectivity, needsHuman: cs.confidence < 0.9 || cs.unparsed.length > 0 }, null, 2)}</pre>
           {cs.unparsed.map(u => <div key={u} className="callout amber small">{u}</div>)}
         </div>
         <div className="grid" style={{ alignContent: 'start' }}>

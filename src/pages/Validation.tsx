@@ -22,9 +22,9 @@ export default function Validation() {
       {res && (
         <>
           <div className="grid g4" style={{ marginBottom: 14 }}>
-            <div className="card"><Stat v={pct(res.criticalRecall)} l="recall on critical defect classes (release gate = 100%)" tone={res.criticalRecall === 1 ? '#1b9e8a' : '#d6334a'} /></div>
+            <div className="card"><Stat v={pct(res.criticalRecall)} l="recall on critical defect classes (release gate = 100%)" tone={res.criticalRecall === 1 ? '#1a7f5a' : '#b3261e'} /></div>
             <div className="card"><Stat v={pct(res.recall)} l={`overall recall (${(res.n - res.clean).toLocaleString()} injected defects)`} /></div>
-            <div className="card"><Stat v={pct(res.precision)} l={`precision · ${res.falsePos} false positives on ${res.clean} clean labels`} tone={res.falsePos ? '#e29a2d' : '#1b9e8a'} /></div>
+            <div className="card"><Stat v={pct(res.precision)} l={`precision · ${res.falsePos} false positives on ${res.clean} clean labels`} tone={res.falsePos ? '#9a6400' : '#1a7f5a'} /></div>
             <div className="card"><Stat v={`${res.ms.toFixed(0)} ms`} l={`${res.n.toLocaleString()} labels compiled, mutated, verified`} /></div>
           </div>
           <div className="card">

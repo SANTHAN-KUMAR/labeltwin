@@ -23,11 +23,11 @@ export default function Approve() {
       <div className="grid g-side">
         <div className="card">
           <div className="between"><h3 style={{ margin: 0 }}><Icon name="chart" /> Change risk score</h3><span className={`badge ${r.tier === 'High' ? 'b-fail' : r.tier === 'Medium' ? 'b-warn' : 'b-pass'}`}>{r.tier} risk</span></div>
-          <div className="row" style={{ margin: '10px 0 14px' }}><Stat v={`${r.score}/100`} l="additive, explainable score" tone={r.tier === 'High' ? '#d6334a' : '#e29a2d'} /></div>
+          <div className="row" style={{ margin: '10px 0 14px' }}><Stat v={`${r.score}/100`} l="additive, explainable score" tone={r.tier === 'High' ? '#b3261e' : '#9a6400'} /></div>
           {r.features.map(f => (
             <div key={f.key} style={{ marginBottom: 8 }}>
               <div className="between small"><span>{f.label} <span className="muted">· {f.value}</span></span><b>+{f.points}</b></div>
-              <div className="bar"><i style={{ width: `${(f.points / 20) * 100}%`, background: '#6a5acd' }} /></div>
+              <div className="bar"><i style={{ width: `${(f.points / 20) * 100}%`, background: '#5647c2' }} /></div>
             </div>
           ))}
           <p className="tiny muted" style={{ marginBottom: 0 }}>Priors calibrated on the openFDA labeling-recall taxonomy (2023–2026); in production the model retrains on the client's CAPA, FAI and line-reject history. The score routes review; it never approves.</p>
