@@ -49,7 +49,7 @@ export default function App() {
     <div className="shell">
       <aside className={`side ${open ? 'open' : ''}`} aria-label="Navigation">
         <div className="brand" onClick={() => nav('home')}>
-          <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden><rect width="64" height="64" rx="14" fill="#12385f" /><rect x="14" y="16" width="24" height="32" rx="3" fill="none" stroke="#36c5b0" strokeWidth="4" /><rect x="26" y="16" width="24" height="32" rx="3" fill="#36c5b0" opacity=".85" /><path d="M31 33l5 5 9-11" stroke="#0b2a4a" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden><rect width="64" height="64" rx="12" fill="#17191d" /><rect x="14" y="16" width="24" height="32" rx="3" fill="none" stroke="#2457d6" strokeWidth="4" /><rect x="26" y="16" width="24" height="32" rx="3" fill="#2457d6" opacity=".85" /><path d="M31 33l5 5 9-11" stroke="#fff" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
           <div><b>LabelTwin</b><small>Compile · Verify · Prove</small></div>
         </div>
         <button className="btn teal" onClick={() => { set({ tourStep: 0 }); nav('home') }}><Icon name="play" size={14} /> Guided demo</button>
@@ -67,8 +67,8 @@ export default function App() {
           <button className={`navbtn ${s.page === 'architecture' ? 'on' : ''}`} onClick={() => nav('architecture')}><span className="num"><Icon name="layers" size={12} /></span>Architecture</button>
         </div>
         <div className="foot">
-          <button className="btn ghost sm" style={{ background: 'transparent', color: '#cfe0f0', borderColor: 'rgba(255,255,255,.25)', width: '100%', marginBottom: 10 }} onClick={() => { reset(); setOpen(false) }}>Reset scenario</button>
-          Team <b style={{ color: '#fff' }}>Astute Computer</b> · Teliport S4 · Case Study 4<br />Fictional company, products and identifiers (GS1 demo prefix 952).
+          <button className="btn ghost sm" style={{ width: '100%', marginBottom: 10 }} onClick={() => { reset(); setOpen(false) }}>Reset scenario</button>
+          Team <b style={{ color: 'var(--ink)' }}>Astute Computer</b> · Teliport S4 · Case Study 4<br />Fictional company, products and identifiers (GS1 demo prefix 952).
         </div>
       </aside>
       <div className="main">

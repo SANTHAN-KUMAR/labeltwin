@@ -50,15 +50,15 @@ export default function Verify() {
         <>
           <div className="grid g4" style={{ marginBottom: 14 }}>
             <div className="card"><Stat v={sm.total.toLocaleString()} l={`checks on 1,152 labels in ${s.verify!.ms.toFixed(0)} ms (run #${s.verify!.run})`} /></div>
-            <div className="card"><Stat v={sm.pass.toLocaleString()} l="passed" tone="#1b9e8a" /></div>
-            <div className="card"><Stat v={sm.fail} l="failed (block release)" tone={sm.fail ? '#d6334a' : '#1b9e8a'} /></div>
-            <div className="card"><Stat v={sm.warn} l="warnings (RA decision)" tone="#e29a2d" /></div>
+            <div className="card"><Stat v={sm.pass.toLocaleString()} l="passed" tone="#1a7f5a" /></div>
+            <div className="card"><Stat v={sm.fail} l="failed (block release)" tone={sm.fail ? '#b3261e' : '#1a7f5a'} /></div>
+            <div className="card"><Stat v={sm.warn} l="warnings (RA decision)" tone="#9a6400" /></div>
           </div>
           <div className="card" style={{ marginBottom: 14 }}>
             <h3>By check family</h3>
             <div className="grid g4" style={{ gap: 10 }}>
               {FAMS.map(f => { const x = sm.fams[f] ?? { pass: 0, fail: 0, warn: 0 }; const t = x.pass + x.fail + x.warn; return (
-                <div key={f}><div className="between small"><b>{f}</b><span className="tiny muted">{t.toLocaleString()}</span></div><div className="bar"><i style={{ width: `${t ? (x.pass / t) * 100 : 0}%`, background: x.fail ? '#d6334a' : x.warn ? '#e29a2d' : undefined }} /></div><div className="tiny muted">{x.fail} fail · {x.warn} warn</div></div>
+                <div key={f}><div className="between small"><b>{f}</b><span className="tiny muted">{t.toLocaleString()}</span></div><div className="bar"><i style={{ width: `${t ? (x.pass / t) * 100 : 0}%`, background: x.fail ? '#b3261e' : x.warn ? '#9a6400' : undefined }} /></div><div className="tiny muted">{x.fail} fail · {x.warn} warn</div></div>
               ) })}
             </div>
           </div>

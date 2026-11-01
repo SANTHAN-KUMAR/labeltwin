@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { PageHeader, Icon, Stat } from '../components/ui'
 import { RECALL_CLASSES, RECALL_EXAMPLES, RECALL_META, VSM, VSM_TOTAL } from '../data/evidence'
 
-const TONE: Record<string, string> = { auto: '#1b9e8a', line: '#1e9bd7', human: '#e29a2d', unclear: '#b8c2cc' }
+const TONE: Record<string, string> = { auto: '#1a7f5a', line: '#2457d6', human: '#9a6400', unclear: '#b8c2cc' }
 
 export default function Insights() {
   const [live, setLive] = useState<string | null>(null)
@@ -25,10 +25,10 @@ export default function Insights() {
         right={<button className="btn ghost" onClick={refresh}><Icon name="radar" size={16} /> Refresh from openFDA</button>} />
       {live && <div className="callout sky" style={{ marginBottom: 14 }}>{live}</div>}
       <div className="grid g4" style={{ marginBottom: 14 }}>
-        <div className="card"><Stat v={`${Math.round(((auto + line) / total) * 100)}%`} l={`of ${total} events map to an automated (${Math.round((auto / total) * 100)}%) or line-side (${Math.round((line / total) * 100)}%) control`} tone="#1b9e8a" /></div>
+        <div className="card"><Stat v={`${Math.round(((auto + line) / total) * 100)}%`} l={`of ${total} events map to an automated (${Math.round((auto / total) * 100)}%) or line-side (${Math.round((line / total) * 100)}%) control`} tone="#1a7f5a" /></div>
         <div className="card"><Stat v={RECALL_META.longRun.labeling.toLocaleString()} l={`labeling-root-cause recalls 2003–2026 (${RECALL_META.longRun.pctAll}% of all, ${RECALL_META.longRun.pctAttributed}% of attributed)`} /></div>
-        <div className="card"><Stat v="#1" l="Labeling Change Control is the top labeling root cause 2023–24 (104), then Labeling design (99)" tone="#d6334a" /></div>
-        <div className="card"><Stat v={`−${Math.round((1 - VSM_TOTAL.after / VSM_TOTAL.before) * 100)}%`} l={`modelled cycle time per change (${VSM_TOTAL.before} → ${VSM_TOTAL.after} days)`} tone="#1e9bd7" /></div>
+        <div className="card"><Stat v="#1" l="Labeling Change Control is the top labeling root cause 2023–24 (104), then Labeling design (99)" tone="#b3261e" /></div>
+        <div className="card"><Stat v={`−${Math.round((1 - VSM_TOTAL.after / VSM_TOTAL.before) * 100)}%`} l={`modelled cycle time per change (${VSM_TOTAL.before} → ${VSM_TOTAL.after} days)`} tone="#2457d6" /></div>
       </div>
       <div className="grid g2">
         <div className="card">
@@ -54,7 +54,7 @@ export default function Insights() {
         <div className="tablewrap"><table className="t"><thead><tr><th>Step</th><th style={{ width: '42%' }}>Before → after</th><th>Mechanism</th></tr></thead><tbody>
           {VSM.map(v => (
             <tr key={v.step}><td className="small"><b>{v.step}</b></td>
-              <td><div className="bar" style={{ background: '#fdecee' }}><i style={{ width: `${(v.before / vmax) * 100}%`, background: '#f0a6b1' }} /></div><div className="bar" style={{ marginTop: 3 }}><i style={{ width: `${(v.after / vmax) * 100}%` }} /></div><div className="tiny muted">{v.before} → {v.after} d</div></td>
+              <td><div className="bar" style={{ background: '#fbeaea' }}><i style={{ width: `${(v.before / vmax) * 100}%`, background: '#f0a6b1' }} /></div><div className="bar" style={{ marginTop: 3 }}><i style={{ width: `${(v.after / vmax) * 100}%` }} /></div><div className="tiny muted">{v.before} → {v.after} d</div></td>
               <td className="small">{v.how}</td></tr>
           ))}
         </tbody></table></div>

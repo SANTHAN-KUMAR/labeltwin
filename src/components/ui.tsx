@@ -20,7 +20,7 @@ export function PageHeader({ eyebrow, title, desc, crit, steps, right }: { eyebr
         <p>{desc}</p>
         <div className="chips" style={{ marginTop: 10 }}>
           {crit.map(c => <span key={c} className={`chip ${c === 'C7' ? 'c7' : c === 'C6' ? 'c6' : c === 'C2' ? 'c2' : ''}`}>✓ {CRITERIA[c]}</span>)}
-          {steps && <span className="chip" style={{ background: '#eef1f4', color: '#4b5a6a' }}>Process steps {steps}</span>}
+          {steps && <span className="chip b-gray">Process steps {steps}</span>}
         </div>
       </div>
       {right}

@@ -2,11 +2,11 @@ import { PageHeader } from '../components/ui'
 import { useStore, type Page } from '../state/store'
 
 const LAYERS = [
-  { n: 'L1', name: 'Connect', tone: '#0b2a4a', items: ['PLM · ERP · RIM · QMS / risk file', 'LMS archive (Loftware, PRISYM, BarTender)', 'TMS / termbase', 'GUDID · EUDAMED · AusUDID · swissdamed', 'Reg feeds: eCFR, Fed. Register, EUR-Lex/OJ, IMDRF, NMPA, TGA', 'Document AI migration of legacy labels'] },
-  { n: 'L2', name: 'Labeling Knowledge Graph', tone: '#6a5acd', items: ['Product Master Graph (variants, packaging, BOM, UDI-DI)', 'Requirement Graph (versioned, cited clauses)', 'Symbol Library (ISO 15223-1 + A1:2025, validity windows)', 'Phrase Library (approved × 26 languages)', 'Template Library (1 per packaging level)'] },
-  { n: 'L3', name: 'AI Agent Mesh (each with a deterministic guard)', tone: '#1e9bd7', items: ['RegWatch → graph delta (RA approves)', 'Change Copilot → schema-validated CR', 'Impact Engine → graph traversal', 'Author → phrase-library-only drafting', 'Translate-QA · Vision (OCR/VLM, diff) · Risk Predictor'] },
-  { n: 'L4', name: 'Compile & Verify', tone: '#1b9e8a', items: ['Label Compiler: variants, auto-layout, text-fit, GS1 DataMatrix', 'Verification Suite: 40+ checks, 8 families', 'UDI triangle + decode-back', 'LBOM + self-test report per label revision'] },
-  { n: 'L5', name: 'Govern & Release', tone: '#e29a2d', items: ['Risk-routed BPMN workflow', 'Part 11 e-signatures (ECDSA)', 'Auto-LCO → PLM; config baseline', 'Hash-chained ledger + W3C PROV', 'Release → LMS, eIFU, registries; line-side vision'] },
+  { n: 'L1', name: 'Connect', tone: '#17191d', items: ['PLM · ERP · RIM · QMS / risk file', 'LMS archive (Loftware, PRISYM, BarTender)', 'TMS / termbase', 'GUDID · EUDAMED · AusUDID · swissdamed', 'Reg feeds: eCFR, Fed. Register, EUR-Lex/OJ, IMDRF, NMPA, TGA', 'Document AI migration of legacy labels'] },
+  { n: 'L2', name: 'Labeling Knowledge Graph', tone: '#5647c2', items: ['Product Master Graph (variants, packaging, BOM, UDI-DI)', 'Requirement Graph (versioned, cited clauses)', 'Symbol Library (ISO 15223-1 + A1:2025, validity windows)', 'Phrase Library (approved × 26 languages)', 'Template Library (1 per packaging level)'] },
+  { n: 'L3', name: 'AI Agent Mesh (each with a deterministic guard)', tone: '#2457d6', items: ['RegWatch → graph delta (RA approves)', 'Change Copilot → schema-validated CR', 'Impact Engine → graph traversal', 'Author → phrase-library-only drafting', 'Translate-QA · Vision (OCR/VLM, diff) · Risk Predictor'] },
+  { n: 'L4', name: 'Compile & Verify', tone: '#1a7f5a', items: ['Label Compiler: variants, auto-layout, text-fit, GS1 DataMatrix', 'Verification Suite: 40+ checks, 8 families', 'UDI triangle + decode-back', 'LBOM + self-test report per label revision'] },
+  { n: 'L5', name: 'Govern & Release', tone: '#9a6400', items: ['Risk-routed BPMN workflow', 'Part 11 e-signatures (ECDSA)', 'Auto-LCO → PLM; config baseline', 'Hash-chained ledger + W3C PROV', 'Release → LMS, eIFU, registries; line-side vision'] },
 ]
 
 const STEPS: [string, string, Page][] = [
