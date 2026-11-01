@@ -1,0 +1,27 @@
+{
+  "name": "labeltwin-prototype",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "LabelTwin: compile-verify-prove medical device labeling. Teliport S4 Case Study 4 prototype by Team Astute Computer.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "bwip-js": "4.11.4",
+    "pixelmatch": "8.0.0",
+    "react": "19.1.10",
+    "react-dom": "19.1.10",
+    "zxing-wasm": "3.1.5"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "typescript": "5.9.3",
+    "vite": "8.3.4"
+  }
+}
