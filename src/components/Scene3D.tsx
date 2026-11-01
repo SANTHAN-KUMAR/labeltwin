@@ -2,10 +2,12 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 /**
- * Hero narrative: loose label panels (Connect) assemble into an aligned stack
- * (Compile), a scan plane sweeps the stack (Verify), then an accent check
- * mark resolves in front of it (Prove). Plays once, then idles with a slow
- * drift. Colours are restricted to the app's own ink / accent / white tokens.
+ * Full-bleed hero scene: loose label panels (Connect) drift together into an
+ * aligned stack (Compile), a scan plane sweeps it (Verify), then a checkmark
+ * drawn as a tube along an explicit 3-point path resolves in front, with a
+ * soft glow behind it (Prove). Runs once with a slow camera dolly-in, then
+ * idles with a gentle drift. Dark background by design: this is the video-
+ * like backdrop behind the hero copy, not a boxed decoration beside it.
  */
 export default function Scene3D() {
   const hostRef = useRef<HTMLDivElement>(null)
@@ -15,62 +17,88 @@ export default function Scene3D() {
     if (!host) return
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 50)
-    camera.position.set(0, 0.4, 7.2)
+    // On a wide hero (desktop: text left, visual right) the stack sits
+    // off-centre to the right so it never overlaps the copy column. On a
+    // narrow/short hero (mobile: visual stacked above the copy, full width)
+    // there is no text to avoid, so it sits centred instead.
+    const centered = host.clientWidth / Math.max(host.clientHeight, 1) < 1.3
+    const stackXOffset = centered ? 0 : 1.35
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 60)
+    const camStart = new THREE.Vector3(stackXOffset + 0.05, 1.3, 11)
+    const camEnd = new THREE.Vector3(stackXOffset * 0.5, 0.45, 7.6)
+    const lookAt = new THREE.Vector3(stackXOffset * 0.65, 0.2, 0)
+    camera.position.copy(camStart)
+    camera.lookAt(lookAt)
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setClearColor(0x000000, 0)
+    renderer.setClearColor(0x0b0d12, 1)
     host.appendChild(renderer.domElement)
 
     const group = new THREE.Group()
     scene.add(group)
 
-    const INK = 0x14161a, ACCENT = 0x3457d9, WHITE = 0xf3f5fa
-    const COUNT = 7
-    const panelGeo = new THREE.BoxGeometry(2.6, 1.5, 0.05)
+    const ACCENT = 0x5b82ff, WHITE = 0xf3f5fa, STEEL = 0x3a3f4c
+    const PW = 2.6, PH = 1.5
+    const COUNT = 9
+    const panelGeo = new THREE.BoxGeometry(PW, PH, 0.04)
     const panels: THREE.Mesh[] = []
     const start: { pos: THREE.Vector3; rot: THREE.Euler }[] = []
     const target: { pos: THREE.Vector3; rot: THREE.Euler }[] = []
 
     for (let i = 0; i < COUNT; i++) {
       const mat = new THREE.MeshStandardMaterial({
-        color: i % 3 === 0 ? ACCENT : i % 3 === 1 ? WHITE : INK,
-        roughness: 0.55, metalness: 0.08, transparent: true, opacity: 0.96,
+        color: i % 4 === 0 ? ACCENT : i % 4 === 1 ? WHITE : STEEL,
+        roughness: 0.45, metalness: 0.15, transparent: true, opacity: 0.97,
       })
       const mesh = new THREE.Mesh(panelGeo, mat)
       const rand = (n: number) => (Math.random() - 0.5) * n
-      start.push({ pos: new THREE.Vector3(rand(9), rand(5), rand(4) - 1), rot: new THREE.Euler(rand(2.4), rand(2.4), rand(2.4)) })
-      const z = (i - (COUNT - 1) / 2) * 0.09
-      target.push({ pos: new THREE.Vector3(0, 0, z), rot: new THREE.Euler(0, 0, 0) })
+      start.push({ pos: new THREE.Vector3(rand(13) - 1, rand(7), rand(6) - 2), rot: new THREE.Euler(rand(3), rand(3), rand(3)) })
+      const z = (i - (COUNT - 1) / 2) * 0.075
+      target.push({ pos: new THREE.Vector3(stackXOffset, 0.3, z), rot: new THREE.Euler(0, 0, 0) })
       mesh.position.copy(start[i].pos)
       mesh.rotation.copy(start[i].rot)
       group.add(mesh)
       panels.push(mesh)
     }
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.75)
-    const key = new THREE.DirectionalLight(0xffffff, 1.1)
-    key.position.set(3, 4, 5)
-    const rim = new THREE.DirectionalLight(0x3457d9, 0.5)
-    rim.position.set(-4, -2, -3)
+    const ambient = new THREE.AmbientLight(0xffffff, 0.5)
+    const key = new THREE.DirectionalLight(0xffffff, 1.3)
+    key.position.set(3, 5, 6)
+    const rim = new THREE.DirectionalLight(0x5b82ff, 0.9)
+    rim.position.set(-5, -2, -4)
     scene.add(ambient, key, rim)
 
-    const scanGeo = new THREE.PlaneGeometry(3.4, 0.05)
+    const STACK_X = stackXOffset, STACK_Y = 0.3
+
+    const scanGeo = new THREE.PlaneGeometry(3.6, 0.045)
     const scanMat = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 })
     const scan = new THREE.Mesh(scanGeo, scanMat)
-    scan.position.set(0, 1.2, 0.5)
+    scan.position.set(STACK_X, STACK_Y + 1.3, 0.45)
     group.add(scan)
 
-    const checkGroup = new THREE.Group()
-    const checkMat = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 })
-    const bar1 = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.09, 0.04), checkMat)
-    const bar2 = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.09, 0.04), checkMat)
-    bar1.position.set(-0.52, -0.08, 0.5); bar1.rotation.z = Math.PI / 4
-    bar2.position.set(0.1, 0.18, 0.5); bar2.rotation.z = -Math.PI / 4
-    checkGroup.add(bar1, bar2)
-    group.add(checkGroup)
+    // Checkmark: an explicit 3-point path centred on the assembled stack,
+    // sized to stay well inside the panel bounds (half-width 1.3, half-height
+    // 0.75) regardless of viewport, so it can never overflow like a
+    // hand-placed box pair.
+    const checkPts = [
+      new THREE.Vector3(STACK_X - 0.52, STACK_Y - 0.02, 0.5),
+      new THREE.Vector3(STACK_X - 0.14, STACK_Y - 0.4, 0.5),
+      new THREE.Vector3(STACK_X + 0.56, STACK_Y + 0.38, 0.5),
+    ]
+    const checkCurve = new THREE.CatmullRomCurve3(checkPts)
+    const checkGeo = new THREE.TubeGeometry(checkCurve, 24, 0.055, 8, false)
+    const checkMat = new THREE.MeshBasicMaterial({ color: WHITE, transparent: true, opacity: 0 })
+    const checkMesh = new THREE.Mesh(checkGeo, checkMat)
+    group.add(checkMesh)
+
+    const glowGeo = new THREE.CircleGeometry(0.9, 32)
+    const glowMat = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false })
+    const glow = new THREE.Mesh(glowGeo, glowMat)
+    glow.position.set(STACK_X + 0.02, STACK_Y, 0.3)
+    group.add(glow)
 
     const clock = new THREE.Clock()
     const ease = (t: number) => 1 - Math.pow(1 - t, 3)
@@ -88,11 +116,12 @@ export default function Scene3D() {
     const ro = new ResizeObserver(resize)
     ro.observe(host)
 
-    const ASSEMBLE_END = reduceMotion ? 0 : 1.6
-    const SCAN_START = ASSEMBLE_END + 0.25
-    const SCAN_END = SCAN_START + 0.9
-    const CHECK_START = SCAN_END + 0.15
-    const CHECK_END = CHECK_START + 0.6
+    const ASSEMBLE_END = reduceMotion ? 0 : 2.1
+    const SCAN_START = ASSEMBLE_END + 0.3
+    const SCAN_END = SCAN_START + 1.0
+    const GLOW_START = SCAN_END - 0.1
+    const CHECK_START = SCAN_END + 0.1
+    const CHECK_END = CHECK_START + 0.7
 
     function frame() {
       if (disposed) return
@@ -107,18 +136,25 @@ export default function Scene3D() {
           THREE.MathUtils.lerp(start[i].rot.z, target[i].rot.z, ea),
         )
       }
+      camera.position.lerpVectors(camStart, camEnd, ea)
+      camera.lookAt(lookAt)
+
       if (t > SCAN_START) {
         const s = Math.min((t - SCAN_START) / (SCAN_END - SCAN_START), 1)
-        scanMat.opacity = s < 1 ? 0.85 : 0
-        scan.position.y = THREE.MathUtils.lerp(1.2, -1.2, ease(s))
+        scanMat.opacity = s < 1 ? 0.9 : 0
+        scan.position.y = THREE.MathUtils.lerp(STACK_Y + 1.3, STACK_Y - 1.3, ease(s))
+      }
+      if (t > GLOW_START) {
+        const g = Math.min((t - GLOW_START) / 0.9, 1)
+        glowMat.opacity = Math.sin(g * Math.PI) * 0.55
       }
       if (t > CHECK_START) {
         const c = Math.min((t - CHECK_START) / (CHECK_END - CHECK_START), 1)
         checkMat.opacity = ease(c)
       }
       if (!reduceMotion) {
-        group.rotation.y = Math.sin(t * 0.18) * 0.12
-        group.rotation.x = Math.sin(t * 0.13) * 0.04
+        group.rotation.y = Math.sin(t * 0.15) * 0.1
+        group.rotation.x = Math.sin(t * 0.11) * 0.035
       }
       renderer.render(scene, camera)
       raf = requestAnimationFrame(frame)
@@ -130,8 +166,7 @@ export default function Scene3D() {
       cancelAnimationFrame(raf)
       ro.disconnect()
       panels.forEach(p => (p.material as THREE.Material).dispose())
-      panelGeo.dispose(); scanGeo.dispose(); scanMat.dispose(); checkMat.dispose()
-      bar1.geometry.dispose(); bar2.geometry.dispose()
+      panelGeo.dispose(); scanGeo.dispose(); scanMat.dispose(); checkMat.dispose(); checkGeo.dispose(); glowGeo.dispose(); glowMat.dispose()
       renderer.dispose()
       host.removeChild(renderer.domElement)
     }
