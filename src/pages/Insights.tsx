@@ -25,10 +25,10 @@ export default function Insights() {
         right={<button className="btn ghost" onClick={refresh}><Icon name="radar" size={16} /> Refresh from openFDA</button>} />
       {live && <div className="callout sky" style={{ marginBottom: 14 }}>{live}</div>}
       <div className="grid g4" style={{ marginBottom: 14 }}>
-        <div className="card"><Stat v={`${Math.round(((auto + line) / total) * 100)}%`} l={`of ${total} events map to an automated (${Math.round((auto / total) * 100)}%) or line-side (${Math.round((line / total) * 100)}%) control`} tone="#1a7f5a" /></div>
-        <div className="card"><Stat v={RECALL_META.longRun.labeling.toLocaleString()} l={`labeling-root-cause recalls 2003–2026 (${RECALL_META.longRun.pctAll}% of all, ${RECALL_META.longRun.pctAttributed}% of attributed)`} /></div>
-        <div className="card"><Stat v="#1" l="Labeling Change Control is the top labeling root cause 2023–24 (104), then Labeling design (99)" tone="#b3261e" /></div>
-        <div className="card"><Stat v={`−${Math.round((1 - VSM_TOTAL.after / VSM_TOTAL.before) * 100)}%`} l={`modelled cycle time per change (${VSM_TOTAL.before} → ${VSM_TOTAL.after} days)`} tone="#2457d6" /></div>
+        <Stat fill="dark" v={`${Math.round(((auto + line) / total) * 100)}%`} l={`of ${total} events map to an automated (${Math.round((auto / total) * 100)}%) or line-side (${Math.round((line / total) * 100)}%) control`} />
+        <Stat fill="gray" v={RECALL_META.longRun.labeling.toLocaleString()} l={`labeling-root-cause recalls 2003–2026 (${RECALL_META.longRun.pctAll}% of all, ${RECALL_META.longRun.pctAttributed}% of attributed)`} />
+        <Stat fill="blue" v="#1" l="Labeling Change Control is the top labeling root cause 2023–24 (104), then Labeling design (99)" />
+        <Stat fill="dark" v={`−${Math.round((1 - VSM_TOTAL.after / VSM_TOTAL.before) * 100)}%`} l={`modelled cycle time per change (${VSM_TOTAL.before} → ${VSM_TOTAL.after} days)`} />
       </div>
       <div className="grid g2">
         <div className="card">

@@ -17,6 +17,7 @@ export function PageHeader({ eyebrow, title, desc, crit, steps, right }: { eyebr
       <div style={{ minWidth: 0, flex: '1 1 520px' }}>
         <div className="eyebrow">{eyebrow}</div>
         <h1>{title}</h1>
+        <div className="rule" />
         <p>{desc}</p>
         <div className="chips" style={{ marginTop: 10 }}>
           {crit.map(c => <span key={c} className={`chip ${c === 'C7' ? 'c7' : c === 'C6' ? 'c6' : c === 'C2' ? 'c2' : ''}`}>✓ {CRITERIA[c]}</span>)}
@@ -32,7 +33,8 @@ export function Sev({ s }: { s: 'pass' | 'fail' | 'warn' }) {
   return <span className={`badge b-${s}`}>{s === 'pass' ? '✓ PASS' : s === 'fail' ? '✕ FAIL' : '! WARN'}</span>
 }
 
-export function Stat({ v, l, tone }: { v: ReactNode; l: ReactNode; tone?: string }) {
+export function Stat({ v, l, tone, fill }: { v: ReactNode; l: ReactNode; tone?: string; fill?: 'dark' | 'blue' | 'gray' }) {
+  if (fill) return <div className={`tile ${fill}`}><span className="v">{v}</span><span className="l">{l}</span></div>
   return <div className="stat"><span className="v" style={tone ? { color: tone } : undefined}>{v}</span><span className="l">{l}</span></div>
 }
 

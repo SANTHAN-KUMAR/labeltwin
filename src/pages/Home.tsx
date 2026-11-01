@@ -29,10 +29,10 @@ export default function Home() {
       </section>
 
       <div className="grid g4">
-        <div className="card"><Stat v="69%" l="of 218 FDA labeling-recall events (2023–Oct 2026) map to a LabelTwin automated or line-side control" tone="#1a7f5a" /></div>
-        <div className="card"><Stat v={RECALL_META.longRun.labeling.toLocaleString()} l={`device recalls with a labeling root cause since 2003 (openFDA, ${RECALL_META.longRun.pctAttributed}% of attributed)`} /></div>
-        <div className="card"><Stat v={`−${Math.round((1 - VSM_TOTAL.after / VSM_TOTAL.before) * 100)}%`} l={`modelled change cycle time: ${VSM_TOTAL.before} → ${VSM_TOTAL.after} working days`} tone="#2457d6" /></div>
-        <div className="card"><Stat v={PORTFOLIO_LABELS.toLocaleString()} l="labels in the demo portfolio, compiled from 3 templates per family" /></div>
+        <Stat fill="dark" v="69%" l="of 218 FDA labeling-recall events (2023–Oct 2026) map to a LabelTwin automated or line-side control" />
+        <Stat fill="gray" v={RECALL_META.longRun.labeling.toLocaleString()} l={`device recalls with a labeling root cause since 2003 (openFDA, ${RECALL_META.longRun.pctAttributed}% of attributed)`} />
+        <Stat fill="blue" v={`−${Math.round((1 - VSM_TOTAL.after / VSM_TOTAL.before) * 100)}%`} l={`modelled change cycle time: ${VSM_TOTAL.before} → ${VSM_TOTAL.after} working days`} />
+        <Stat fill="dark" v={PORTFOLIO_LABELS.toLocaleString()} l="labels in the demo portfolio, compiled from 3 templates per family" />
       </div>
 
       <div className="grid g-side">
