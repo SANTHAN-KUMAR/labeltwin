@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useReveal, useCountUp } from '../state/motion'
 
 export const CRITERIA = {
   C1: 'Problem understanding',
@@ -12,9 +13,10 @@ export const CRITERIA = {
 export type Crit = keyof typeof CRITERIA
 
 export function PageHeader({ eyebrow, title, desc, crit, steps, right }: { eyebrow: string; title: string; desc: ReactNode; crit: Crit[]; steps?: string; right?: ReactNode }) {
+  const { ref, className } = useReveal<HTMLDivElement>()
   return (
     <div className="ph">
-      <div style={{ minWidth: 0, flex: '1 1 520px' }}>
+      <div ref={ref} className={className} style={{ minWidth: 0, flex: '1 1 520px' }}>
         <div className="eyebrow">{eyebrow}</div>
         <h1>{title}</h1>
         <div className="rule" />
@@ -34,8 +36,10 @@ export function Sev({ s }: { s: 'pass' | 'fail' | 'warn' }) {
 }
 
 export function Stat({ v, l, tone, fill }: { v: ReactNode; l: ReactNode; tone?: string; fill?: 'dark' | 'blue' | 'gray' }) {
-  if (fill) return <div className={`tile ${fill}`}><span className="v">{v}</span><span className="l">{l}</span></div>
-  return <div className="stat"><span className="v" style={tone ? { color: tone } : undefined}>{v}</span><span className="l">{l}</span></div>
+  const { ref, className } = useReveal<HTMLDivElement>()
+  const animated = useCountUp(v, className.includes('in'))
+  if (fill) return <div ref={ref} className={`tile ${fill} ${className}`}><span className="v">{animated}</span><span className="l">{l}</span></div>
+  return <div ref={ref} className={`stat ${className}`}><span className="v" style={tone ? { color: tone } : undefined}>{animated}</span><span className="l">{l}</span></div>
 }
 
 export function Icon({ name, size = 18 }: { name: string; size?: number }) {
